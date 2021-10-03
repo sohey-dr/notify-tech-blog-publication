@@ -6,8 +6,13 @@ import (
 )
 
 func main() {
-	t, ok := scraper.ScrapeDeNA()
+	dena, ok := scraper.ScrapeDeNA()
 	if ok {
-		log.Println(t)
+		log.Println(dena)
+	}
+
+	zozo, ok := scraper.ScrapeZOZO()
+	if ok {
+		log.Println(zozo)
 	}
 }
