@@ -1,7 +1,6 @@
 package scraper
 
 import (
-	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
@@ -14,7 +13,8 @@ type Article struct {
 	Url   string
 }
 
-func ScrapeDeNA() *Article {
+// ScrapeDeNA DeNAのテックブログの最新記事が今日のだったら構造体Articleと存在の有無をboolで返すメソッド
+func ScrapeDeNA() (Article, bool) {
 	url := "https://engineer.dena.com/"
 	res, err := http.Get(url)
 	if err != nil {
@@ -26,7 +26,8 @@ func ScrapeDeNA() *Article {
 	t := time.Now()
 	latestArticle := doc.Find(".article-list").First()
 	latestArticleContents := latestArticle.Text()
-	var article *Article
+
+	var article Article
 	if strings.Contains(latestArticleContents, string(t.Month())) && strings.Contains(latestArticleContents, string(t.Day())) {
 		title := latestArticle.Find("div > h2 > a").First()
 		articleLink, exist := title.Attr("href")
@@ -34,11 +35,13 @@ func ScrapeDeNA() *Article {
 			log.Println("error")
 		}
 
-		article = &Article{
+		article = Article{
 			Title: title.Text(),
 			Url:   url + articleLink,
 		}
+
+		return article, true
 	}
 
-	return article
+	return article, false
 }
