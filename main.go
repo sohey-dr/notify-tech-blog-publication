@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"notify-tech-blog-publication/scraper"
+	"sync"
+	"time"
 )
 
 const siteNum int = 2
