@@ -5,6 +5,8 @@ import (
 	"notify-tech-blog-publication/scraper"
 )
 
+const siteNum int = 2
+
 func main() {
 	start := time.Now()
 	concurrent()
