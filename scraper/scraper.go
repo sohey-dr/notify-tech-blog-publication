@@ -5,6 +5,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
+	"strings"
+	"time"
 )
 
 func ScrapeDeNA() {
@@ -16,11 +18,15 @@ func ScrapeDeNA() {
 
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
-	result := doc.Find(".article-list > div > h2 > a").First()
-	articleLink, exist := result.Attr("href")
-	if !exist {
-		log.Println("error")
+	t := time.Now()
+	latestArticleContents := doc.Find(".article-list").First().Text()
+	if strings.Contains(latestArticleContents, string(t.Month())) && strings.Contains(latestArticleContents, string(t.Day())) {
+		result := doc.Find(".article-list > div > h2 > a").First()
+		articleLink, exist := result.Attr("href")
+		if !exist {
+			log.Println("error")
+		}
+		articleLink = url + articleLink
+		fmt.Println(articleLink)
 	}
-	articleLink = url + articleLink
-	fmt.Println(articleLink)
 }
