@@ -24,10 +24,12 @@ func ScrapeDeNA() *Article {
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
 	t := time.Now()
-	latestArticleContents := doc.Find(".article-list").First().Text()
+	latestArticle := doc.Find(".article-list").First()
+	latestArticleContents := latestArticle.Text()
+	var article *Article
 	if strings.Contains(latestArticleContents, string(t.Month())) && strings.Contains(latestArticleContents, string(t.Day())) {
-		result := doc.Find(".article-list > div > h2 > a").First()
-		articleLink, exist := result.Attr("href")
+		title := latestArticle.Find("div > h2 > a").First()
+		articleLink, exist := title.Attr("href")
 		if !exist {
 			log.Println("error")
 		}
