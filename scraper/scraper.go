@@ -9,7 +9,12 @@ import (
 	"time"
 )
 
-func ScrapeDeNA() {
+type Article struct {
+	Title string
+	Url   string
+}
+
+func ScrapeDeNA() *Article {
 	url := "https://engineer.dena.com/"
 	res, err := http.Get(url)
 	if err != nil {
@@ -26,7 +31,12 @@ func ScrapeDeNA() {
 		if !exist {
 			log.Println("error")
 		}
-		articleLink = url + articleLink
-		fmt.Println(articleLink)
+
+		article = &Article{
+			Title: title.Text(),
+			Url:   url + articleLink,
+		}
 	}
+
+	return article
 }
