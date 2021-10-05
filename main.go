@@ -16,13 +16,15 @@ func main() {
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
 }
 
-func concurrent() {
+func concurrentScraping() []scraper.Article {
+	var articles []scraper.Article
 	wg := &sync.WaitGroup{}
 	wg.Add(siteNum)
 	go func() {
 		defer wg.Done()
 		dena, ok := scraper.ScrapeDeNA()
 		if ok {
+			articles = append(articles, dena)
 			log.Println(dena)
 		}
 	}()
@@ -31,9 +33,12 @@ func concurrent() {
 		defer wg.Done()
 		zozo, ok := scraper.ScrapeZOZO()
 		if ok {
+			articles = append(articles, zozo)
 			log.Println(zozo)
 		}
 	}()
 
 	wg.Wait()
+
+	return articles
 }
