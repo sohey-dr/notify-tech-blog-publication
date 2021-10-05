@@ -3,15 +3,21 @@ package main
 import (
 	"log"
 	"notify-tech-blog-publication/scraper"
+	"os"
 	"sync"
 	"time"
+
+	"github.com/slack-go/slack"
 )
 
 const siteNum int = 2
 
 func main() {
 	start := time.Now()
-	concurrent()
+	articles := concurrentScraping()
+	if articles != nil {
+		notifySlack(articles)
+	}
 	end := time.Now()
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
 }
