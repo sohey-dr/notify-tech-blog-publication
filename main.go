@@ -42,3 +42,18 @@ func concurrentScraping() []scraper.Article {
 
 	return articles
 }
+
+func notifySlack(articles []scraper.Article) error {
+	text := "*公開された記事がありました！*"
+
+	for _, article := range articles {
+		text += "\n<" + article.Url + "|" + article.Title + ">"
+	}
+
+	msg := slack.WebhookMessage{
+		Text: text,
+	}
+
+	incomingWebHookURL := os.Getenv("NOTIFY_INCOMING_WEBHOOK")
+	return slack.PostWebhook(incomingWebHookURL, &msg)
+}
