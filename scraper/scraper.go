@@ -96,7 +96,7 @@ func ScrapeCookpad() (Article, bool) {
 	var article Article
 	// NOTE: timeパッケージではformatを指定する際には2006-01-02にする
 	// (アメリカ式の時刻の順番。"1月2日午後3時4分5秒2006年"（つまり「自然な順番」で1, 2, 3, 4, 5, 6）を指している)
-	if strings.Contains(latestArticleDate, "2021-09-21") {
+	if strings.Contains(latestArticleDate, time.Now().Format("2006-01-02")) {
 		title := doc.Find(".entry-title > a").First()
 		articleLink, exist := title.Attr("href")
 		if !exist {
