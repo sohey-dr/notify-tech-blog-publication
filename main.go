@@ -50,10 +50,10 @@ func concurrentScraping() []scraper.Article {
 }
 
 func notifySlack(articles []scraper.Article) error {
-	text := "*公開された記事がありました！*"
+	text := "*公開された記事がありました！*\n"
 
 	for _, article := range articles {
-		text += "\n<" + article.Url + "|" + article.Title + ">"
+		text += "\n" + article.Company + ": <" + article.Url + "|" + article.Title + ">"
 	}
 
 	msg := slack.WebhookMessage{
