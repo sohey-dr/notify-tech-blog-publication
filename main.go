@@ -10,13 +10,13 @@ import (
 	"github.com/slack-go/slack"
 )
 
-const siteNum int = 2
+const siteNum int = 3
 
 func main() {
 	start := time.Now()
 	articles := concurrentScraping()
 	if articles != nil {
-		notifySlack(articles)
+		log.Println(notifySlack(articles))
 	}
 	end := time.Now()
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
@@ -44,16 +44,25 @@ func concurrentScraping() []scraper.Article {
 		}
 	}()
 
+	go func() {
+		defer wg.Done()
+		cookpad, ok := scraper.ScrapeCookpad()
+		if ok {
+			articles = append(articles, cookpad)
+			log.Println(cookpad)
+		}
+	}()
+
 	wg.Wait()
 
 	return articles
 }
 
 func notifySlack(articles []scraper.Article) error {
-	text := "*公開された記事がありました！*"
+	text := "*公開された記事がありました！*\n"
 
 	for _, article := range articles {
-		text += "\n<" + article.Url + "|" + article.Title + ">"
+		text += "\n" + article.Company + ": <" + article.Url + "|" + article.Title + ">"
 	}
 
 	msg := slack.WebhookMessage{
@@ -61,5 +70,6 @@ func notifySlack(articles []scraper.Article) error {
 	}
 
 	incomingWebHookURL := os.Getenv("NOTIFY_INCOMING_WEBHOOK")
+
 	return slack.PostWebhook(incomingWebHookURL, &msg)
 }
