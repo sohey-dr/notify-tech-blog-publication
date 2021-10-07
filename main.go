@@ -10,7 +10,7 @@ import (
 	"github.com/slack-go/slack"
 )
 
-const siteNum int = 2
+const siteNum int = 3
 
 func main() {
 	start := time.Now()
@@ -41,6 +41,15 @@ func concurrentScraping() []scraper.Article {
 		if ok {
 			articles = append(articles, zozo)
 			log.Println(zozo)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		cookpad, ok := scraper.ScrapeCookpad()
+		if ok {
+			articles = append(articles, cookpad)
+			log.Println(cookpad)
 		}
 	}()
 
