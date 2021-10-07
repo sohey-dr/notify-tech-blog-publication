@@ -92,7 +92,6 @@ func ScrapeCookpad() (Article, bool) {
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
 	latestArticleDate := doc.Find("time").First().Text()
-	log.Println(latestArticleDate)
 	var article Article
 	// NOTE: timeパッケージではformatを指定する際には2006-01-02にする
 	// (アメリカ式の時刻の順番。"1月2日午後3時4分5秒2006年"（つまり「自然な順番」で1, 2, 3, 4, 5, 6）を指している)
