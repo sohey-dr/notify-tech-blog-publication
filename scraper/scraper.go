@@ -106,7 +106,7 @@ func ScrapeCookpad() (Article, bool) {
 		article = Article{
 			Company: "クックパッド",
 			Title:   title.Text(),
-			Url:     url + articleLink,
+			Url:     articleLink,
 		}
 
 		return article, true
