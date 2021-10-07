@@ -16,7 +16,7 @@ func main() {
 	start := time.Now()
 	articles := concurrentScraping()
 	if articles != nil {
-		notifySlack(articles)
+		log.Println(notifySlack(articles))
 	}
 	end := time.Now()
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
@@ -61,5 +61,6 @@ func notifySlack(articles []scraper.Article) error {
 	}
 
 	incomingWebHookURL := os.Getenv("NOTIFY_INCOMING_WEBHOOK")
+
 	return slack.PostWebhook(incomingWebHookURL, &msg)
 }
