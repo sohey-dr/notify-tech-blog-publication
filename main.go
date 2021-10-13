@@ -10,6 +10,7 @@ import (
 	"github.com/slack-go/slack"
 )
 
+// scrape target site
 const siteNum int = 3
 
 func run() {
