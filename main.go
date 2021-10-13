@@ -12,7 +12,7 @@ import (
 
 const siteNum int = 3
 
-func main() {
+func run() {
 	start := time.Now()
 	articles := concurrentScraping()
 	if articles != nil {
@@ -75,4 +75,8 @@ func notifySlack(articles []scraper.Article) error {
 	incomingWebHookURL := os.Getenv("NOTIFY_INCOMING_WEBHOOK")
 
 	return slack.PostWebhook(incomingWebHookURL, &msg)
+}
+
+func main() {
+	run()
 }
