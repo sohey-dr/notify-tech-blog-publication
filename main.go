@@ -16,7 +16,10 @@ func main() {
 	start := time.Now()
 	articles := concurrentScraping()
 	if articles != nil {
-		log.Println(notifySlack(articles))
+		err := notifySlack(articles)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	end := time.Now()
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
