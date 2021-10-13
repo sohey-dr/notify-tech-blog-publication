@@ -72,7 +72,7 @@ func ScrapeZOZO() (Article, bool) {
 		article = Article{
 			Company: "ZOZO",
 			Title:   title.Text(),
-			Url:     url + articleLink,
+			Url:     articleLink,
 		}
 
 		return article, true
