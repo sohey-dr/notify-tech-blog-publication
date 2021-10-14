@@ -12,8 +12,12 @@ import (
 
 func run() {
 	start := time.Now()
-	articles := concurrentScraping()
-	if articles != nil {
+	articles := concurrentScraping(
+		scraper.ScrapeDeNA,
+		scraper.ScrapeZOZO,
+		scraper.ScrapeCookpad,
+	)
+	if len(articles) != 0 {
 		err := notifySlack(articles)
 		if err != nil {
 			log.Println(err)
@@ -23,37 +27,24 @@ func run() {
 	log.Printf("%f 秒時間がかかりました\n", (end.Sub(start)).Seconds())
 }
 
-func concurrentScraping() []scraper.Article {
-	var articles []scraper.Article
-	wg := &sync.WaitGroup{}
-	wg.Add(siteNum)
-	go func() {
-		defer wg.Done()
-		dena, ok := scraper.ScrapeDeNA()
-		if ok {
-			articles = append(articles, dena)
-			log.Println(dena)
-		}
-	}()
+func concurrentScraping(fs ...func() (scraper.Article, bool)) []scraper.Article {
+	var (
+		articles = make([]scraper.Article, 0, len(fs))
+		wg       = sync.WaitGroup{}
+	)
 
-	go func() {
-		defer wg.Done()
-		zozo, ok := scraper.ScrapeZOZO()
-		if ok {
-			articles = append(articles, zozo)
-			log.Println(zozo)
-		}
-	}()
+	for _, f := range fs {
+		wg.Add(1)
 
-	go func() {
-		defer wg.Done()
-		cookpad, ok := scraper.ScrapeCookpad()
-		if ok {
-			articles = append(articles, cookpad)
-			log.Println(cookpad)
-		}
-	}()
-
+		f := f
+		go func() {
+			defer wg.Done()
+			if art, ok := f(); ok {
+				articles = append(articles, art)
+				log.Println(art)
+			}
+		}()
+	}
 	wg.Wait()
 
 	return articles
