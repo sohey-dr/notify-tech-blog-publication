@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/notify-tech-blog-publication/scraper"
 	"log"
-	"notify-tech-blog-publication/scraper"
 	"os"
 	"sync"
 	"time"
@@ -10,7 +10,7 @@ import (
 	"github.com/slack-go/slack"
 )
 
-func run() {
+func Run() {
 	start := time.Now()
 	articles := concurrentScraping(
 		scraper.ScrapeDeNA,
@@ -67,5 +67,24 @@ func notifySlack(articles []scraper.Article) error {
 }
 
 func main() {
-	run()
+	Run()
 }
+
+//type Scraper interface {
+//	Scrape() (scraper.Article, bool)
+//}
+//
+//type ScraperImpl struct {
+//	URL string
+//	// 取ってきたい tag 要素とか
+//}
+//
+//func NewScpaper(url string) Scraper {
+//	return &ScraperImpl{
+//		URL: url,
+//	}
+//}
+//
+//func (s *ScraperImpl) Scrape() (scraper.Article, bool) {
+//	// 処理
+//}

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"notify-tech-blog-publication/scraper"
+	"github.com/notify-tech-blog-publication/scraper"
 	"testing"
 )
 
