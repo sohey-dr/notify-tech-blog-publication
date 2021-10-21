@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/notify-tech-blog-publication/scraper"
 	"log"
+	"notify-tech-blog-publication/scraper"
 	"os"
 	"sync"
 	"time"
