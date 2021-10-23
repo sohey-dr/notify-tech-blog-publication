@@ -12,7 +12,7 @@ func run() {
 	articles := concurrentScraping(
 		scraper.ScrapeDeNA,
 		scraper.ScrapeZOZO,
-		scraper.ScrapeCookpad,
+		scraper.NewScraper("https://techlife.cookpad.com/", "time", "-10", "time", "15", ".entry-title > a").Scrape,
 	)
 	if len(articles) != 0 {
 		err := notifySlack(articles)
@@ -62,5 +62,5 @@ func notifySlack(articles []scraper.Article) error {
 }
 
 func main() {
-	scraper.Scr()
+	run()
 }
