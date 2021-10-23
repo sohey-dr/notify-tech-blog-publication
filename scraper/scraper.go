@@ -14,6 +14,69 @@ type Article struct {
 	Url     string
 }
 
+func Scr() {
+	NewScraper(
+		"https://techlife.cookpad.com/",
+		"",
+		"-10-",
+		"",
+		"",
+		"",
+	).Scrape()
+}
+
+type Scraper interface {
+	Scrape() (scraper.Article, bool)
+}
+
+type ScraperImpl struct {
+	URL      string
+	MonthTag string
+	Month    string
+	DateTag  string
+	Date     string
+	TitleTag string
+}
+
+func NewScraper(url string, monthTag string, month string, dateTag string, date string, titleTag string) Scraper {
+	return &ScraperImpl{
+		URL:      url,
+		MonthTag: monthTag,
+		Month:    month,
+		DateTag:  dateTag,
+		Date:     date,
+		TitleTag: titleTag,
+	}
+}
+func (s *ScraperImpl) Scrape() (scraper.Article, bool) {
+	res, err := http.Get(s.URL)
+	if err != nil {
+		log.Println(err)
+	}
+
+	doc, _ := goquery.NewDocumentFromReader(res.Body)
+
+	latestArticleDate := doc.Find("time").First().Text()
+	var article scraper.Article
+	if strings.Contains(latestArticleDate, time.Now().Format("2006-01-02")) {
+		title := doc.Find(".entry-title > a").First()
+		articleLink, exist := title.Attr("href")
+		if !exist {
+			log.Println("error")
+		}
+
+		article = scraper.Article{
+			Company: "クックパッド",
+			Title:   title.Text(),
+			Url:     articleLink,
+		}
+
+		return article, true
+	}
+
+	return article, false
+}
+
 // ScrapeDeNA DeNAのテックブログの最新記事が今日のだったら構造体Articleと存在の有無をboolで返すメソッド
 func ScrapeDeNA() (Article, bool) {
 	url := "https://engineer.dena.com/"
