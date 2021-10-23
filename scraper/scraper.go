@@ -49,9 +49,8 @@ func (s *ScraperImpl) Scrape() (Article, bool) {
 
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
-	latestArticleDate := doc.Find(s.DateTag).First().Text()
 	var article Article
-	if strings.Contains(latestArticleDate, s.Date) {
+	if strings.Contains(doc.Find(s.MonthTag).First().Text(), s.Month) && strings.Contains(doc.Find(s.DateTag).First().Text(), s.Date) {
 		title := doc.Find(s.TitleTag).First()
 		articleLink, exist := title.Attr("href")
 		if !exist {
