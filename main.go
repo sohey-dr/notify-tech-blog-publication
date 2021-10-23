@@ -12,7 +12,7 @@ func run() {
 	articles := concurrentScraping(
 		scraper.ScrapeDeNA,
 		scraper.ScrapeZOZO,
-		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", "-10", "time", "15", ".entry-title > a", false).Scrape,
+		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", false).Scrape,
 	)
 	if len(articles) != 0 {
 		err := notifySlack(articles)
