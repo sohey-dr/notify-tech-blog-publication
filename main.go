@@ -11,7 +11,7 @@ import (
 
 func run() {
 	articles := concurrentScraping(
-		scraper.ScrapeDeNA,
+		scraper.NewScraper("DeNA", "https://engineer.dena.com/", ".article-list", time.Now().Format("January 02, 2006"), "div > h2 > a", false).Scrape,
 		scraper.NewScraper("ZOZO", "https://techblog.zozo.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 	)
