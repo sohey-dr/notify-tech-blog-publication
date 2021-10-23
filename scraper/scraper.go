@@ -15,18 +15,18 @@ type Article struct {
 }
 
 func Scr() {
-	NewScraper(
+	log.Println(NewScraper(
 		"https://techlife.cookpad.com/",
-		"",
-		"-10-",
-		"",
-		"",
-		"",
-	).Scrape()
+		"time",
+		"-10",
+		"time",
+		"15",
+		".entry-title > a",
+	).Scrape())
 }
 
 type Scraper interface {
-	Scrape() (scraper.Article, bool)
+	Scrape() (Article, bool)
 }
 
 type ScraperImpl struct {
@@ -48,7 +48,7 @@ func NewScraper(url string, monthTag string, month string, dateTag string, date 
 		TitleTag: titleTag,
 	}
 }
-func (s *ScraperImpl) Scrape() (scraper.Article, bool) {
+func (s *ScraperImpl) Scrape() (Article, bool) {
 	res, err := http.Get(s.URL)
 	if err != nil {
 		log.Println(err)
@@ -56,16 +56,16 @@ func (s *ScraperImpl) Scrape() (scraper.Article, bool) {
 
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
-	latestArticleDate := doc.Find("time").First().Text()
-	var article scraper.Article
-	if strings.Contains(latestArticleDate, time.Now().Format("2006-01-02")) {
-		title := doc.Find(".entry-title > a").First()
+	latestArticleDate := doc.Find(s.DateTag).First().Text()
+	var article Article
+	if strings.Contains(latestArticleDate, s.Date) {
+		title := doc.Find(s.TitleTag).First()
 		articleLink, exist := title.Attr("href")
 		if !exist {
 			log.Println("error")
 		}
 
-		article = scraper.Article{
+		article = Article{
 			Company: "クックパッド",
 			Title:   title.Text(),
 			Url:     articleLink,
