@@ -14,17 +14,6 @@ type Article struct {
 	Url     string
 }
 
-func Scr() {
-	log.Println(NewScraper(
-		"https://techlife.cookpad.com/",
-		"time",
-		"-10",
-		"time",
-		"15",
-		".entry-title > a",
-	).Scrape())
-}
-
 type Scraper interface {
 	Scrape() (Article, bool)
 }
