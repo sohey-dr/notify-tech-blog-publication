@@ -58,10 +58,15 @@ func (s *ScraperImpl) Scrape() (Article, bool) {
 			log.Println("error")
 		}
 
+		var url string
+		if !s.IsBaseURLContains {
+			url = s.URL + articleLink
+		}
+
 		article = Article{
 			Company: s.Target,
 			Title:   title.Text(),
-			Url:     articleLink,
+			Url:     url,
 		}
 
 		return article, true
