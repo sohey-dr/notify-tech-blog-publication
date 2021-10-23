@@ -21,22 +21,18 @@ type Scraper interface {
 type ScraperImpl struct {
 	Target            string
 	URL               string
-	MonthTag          string
-	Month             string
-	DateTag           string
-	Date              string
+	TimeTag           string
+	Time              string
 	TitleTag          string
 	IsBaseURLContains bool
 }
 
-func NewScraper(target string, url string, monthTag string, month string, dateTag string, date string, titleTag string, isBaseURLContains bool) Scraper {
+func NewScraper(target string, url string, timeTag string, time string, titleTag string, isBaseURLContains bool) Scraper {
 	return &ScraperImpl{
 		Target:            target,
 		URL:               url,
-		MonthTag:          monthTag,
-		Month:             month,
-		DateTag:           dateTag,
-		Date:              date,
+		TimeTag:           timeTag,
+		Time:              time,
 		TitleTag:          titleTag,
 		IsBaseURLContains: isBaseURLContains,
 	}
@@ -50,7 +46,7 @@ func (s *ScraperImpl) Scrape() (Article, bool) {
 	doc, _ := goquery.NewDocumentFromReader(res.Body)
 
 	var article Article
-	if strings.Contains(doc.Find(s.MonthTag).First().Text(), s.Month) && strings.Contains(doc.Find(s.DateTag).First().Text(), s.Date) {
+	if strings.Contains(doc.Find(s.TimeTag).First().Text(), s.Time) {
 		title := doc.Find(s.TitleTag).First()
 		articleLink, exist := title.Attr("href")
 		if !exist {
