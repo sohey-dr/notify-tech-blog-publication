@@ -19,24 +19,26 @@ type Scraper interface {
 }
 
 type ScraperImpl struct {
-	Target   string
-	URL      string
-	MonthTag string
-	Month    string
-	DateTag  string
-	Date     string
-	TitleTag string
+	Target            string
+	URL               string
+	MonthTag          string
+	Month             string
+	DateTag           string
+	Date              string
+	TitleTag          string
+	IsBaseURLContains bool
 }
 
-func NewScraper(target string, url string, monthTag string, month string, dateTag string, date string, titleTag string) Scraper {
+func NewScraper(target string, url string, monthTag string, month string, dateTag string, date string, titleTag string, isBaseURLContains bool) Scraper {
 	return &ScraperImpl{
-		Target:   target,
-		URL:      url,
-		MonthTag: monthTag,
-		Month:    month,
-		DateTag:  dateTag,
-		Date:     date,
-		TitleTag: titleTag,
+		Target:            target,
+		URL:               url,
+		MonthTag:          monthTag,
+		Month:             month,
+		DateTag:           dateTag,
+		Date:              date,
+		TitleTag:          titleTag,
+		IsBaseURLContains: isBaseURLContains,
 	}
 }
 func (s *ScraperImpl) Scrape() (Article, bool) {
