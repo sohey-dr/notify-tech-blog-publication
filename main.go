@@ -6,13 +6,14 @@ import (
 	"notify-tech-blog-publication/scraper"
 	"os"
 	"sync"
+	"time"
 )
 
 func run() {
 	articles := concurrentScraping(
 		scraper.ScrapeDeNA,
-		scraper.ScrapeZOZO,
-		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", false).Scrape,
+		scraper.NewScraper("ZOZO", "https://techblog.zozo.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
+		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 	)
 	if len(articles) != 0 {
 		err := notifySlack(articles)
