@@ -19,6 +19,7 @@ type Scraper interface {
 }
 
 type ScraperImpl struct {
+	Target   string
 	URL      string
 	MonthTag string
 	Month    string
@@ -27,8 +28,9 @@ type ScraperImpl struct {
 	TitleTag string
 }
 
-func NewScraper(url string, monthTag string, month string, dateTag string, date string, titleTag string) Scraper {
+func NewScraper(target string, url string, monthTag string, month string, dateTag string, date string, titleTag string) Scraper {
 	return &ScraperImpl{
+		Target:   target,
 		URL:      url,
 		MonthTag: monthTag,
 		Month:    month,
@@ -55,7 +57,7 @@ func (s *ScraperImpl) Scrape() (Article, bool) {
 		}
 
 		article = Article{
-			Company: "クックパッド",
+			Company: s.Target,
 			Title:   title.Text(),
 			Url:     articleLink,
 		}
