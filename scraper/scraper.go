@@ -53,7 +53,7 @@ func (s *ScraperImpl) Scrape() (Article, bool) {
 			log.Println("error")
 		}
 
-		var url string
+		url := articleLink
 		if !s.IsBaseURLContains {
 			url = s.URL + articleLink
 		}
