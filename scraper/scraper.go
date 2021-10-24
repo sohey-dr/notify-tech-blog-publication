@@ -36,6 +36,7 @@ func NewScraper(target string, url string, timeTag string, time string, titleTag
 		IsBaseURLContains: isBaseURLContains,
 	}
 }
+
 func (s *ScraperImpl) Scrape() (Article, bool) {
 	res, err := http.Get(s.URL)
 	if err != nil {
