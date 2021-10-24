@@ -15,6 +15,7 @@ func run() {
 		scraper.NewScraper("ZOZO", "https://techblog.zozo.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 		// TODO: Slackで読み込み後に見れるため見逃しているがタイトルも取得するようにする
 		scraper.NewScraper("Cyber Agent", "https://developers.cyberagent.co.jp/blog/", "time", time.Now().Format("2006/01/02"), ".card__time_title > a", true).Scrape,
+		scraper.NewScraper("メルカリ", "https://engineering.mercari.com/", "time", time.Now().Format("2006/01/02"), ".post-list__item > a", true).Scrape,
 		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 	)
 	if len(articles) != 0 {
