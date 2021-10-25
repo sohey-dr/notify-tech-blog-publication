@@ -17,6 +17,7 @@ func run() {
 		scraper.NewScraper("Cyber Agent", "https://developers.cyberagent.co.jp/blog/", "time", time.Now().Format("2006/01/02"), ".card__time_title > a", true).Scrape,
 		scraper.NewScraper("メルカリ", "https://engineering.mercari.com/", "time", time.Now().Format("2006/01/02"), ".post-list__item > a", true).Scrape,
 		scraper.NewScraper("Sansan", "https://buildersbox.corp-sansan.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
+		scraper.NewScraper("マネーフォワード", "https://moneyforward.com/engineers_blog/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 		scraper.NewScraper("Yahoo!", "https://techblog.yahoo.co.jp/", ".date", time.Now().Format("2006.01.02"), ".panel-horizontal > a", true).Scrape,
 		scraper.NewScraper("エルレカ", "https://medium.com/eureka-engineering/", "time", time.Now().Format("Jan 02"), ".postMetaInline > a", true).Scrape,
 		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
