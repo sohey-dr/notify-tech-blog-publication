@@ -13,7 +13,7 @@ func run() {
 	articles := concurrentScraping(
 		scraper.NewScraper("DeNA", "https://engineer.dena.com/", ".article-list", time.Now().Format("January 02, 2006"), "div > h2 > a", false).Scrape,
 		scraper.NewScraper("ZOZO", "https://techblog.zozo.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
-		// TODO: Slackで読み込み後に見れるため見逃しているがタイトルも取得するようにする
+		// TODO: Slackで読み込み後に見れるため見逃しているがタイトルも取得するようにする(CA, メルカリ)
 		scraper.NewScraper("Cyber Agent", "https://developers.cyberagent.co.jp/blog/", "time", time.Now().Format("2006/01/02"), ".card__time_title > a", true).Scrape,
 		scraper.NewScraper("メルカリ", "https://engineering.mercari.com/", "time", time.Now().Format("2006/01/02"), ".post-list__item > a", true).Scrape,
 		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
