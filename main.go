@@ -18,9 +18,11 @@ func run() {
 		scraper.NewScraper("メルカリ", "https://engineering.mercari.com/", "time", time.Now().Format("2006/01/02"), ".post-list__item > a", true).Scrape,
 		scraper.NewScraper("Sansan", "https://buildersbox.corp-sansan.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 		scraper.NewScraper("マネーフォワード", "https://moneyforward.com/engineers_blog/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
+		scraper.NewScraper("ラクスル", "https://tech.raksul.com/", ".c-posts__post__date", time.Now().Format("2006.01.02"), ".c-posts__post__info__title > a", true).Scrape,
 		scraper.NewScraper("Yahoo!", "https://techblog.yahoo.co.jp/", ".date", time.Now().Format("2006.01.02"), ".panel-horizontal > a", true).Scrape,
 		scraper.NewScraper("エルレカ", "https://medium.com/eureka-engineering/", "time", time.Now().Format("Jan 02"), ".postMetaInline > a", true).Scrape,
 		scraper.NewScraper("Gunosy", "https://tech.gunosy.io/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
+		scraper.NewScraper("Retty", "https://engineer.retty.me/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 		scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape,
 	)
 	if len(articles) != 0 {
