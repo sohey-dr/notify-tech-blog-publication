@@ -5,6 +5,7 @@ import (
 	"log"
 	"notify-tech-blog-publication/scraper"
 	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -60,7 +61,7 @@ func notifySlack(articles []scraper.Article) error {
 	text := "*公開された記事がありました！*\n"
 
 	for _, article := range articles {
-		text += "\n" + article.Company + ": <" + article.Url + "|" + article.Title + ">"
+		text += "\n" + article.Company + ": <" + article.Url + "|" + strings.ReplaceAll(article.Title, " ", "") + ">"
 	}
 
 	msg := slack.WebhookMessage{
