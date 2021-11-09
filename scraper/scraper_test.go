@@ -6,5 +6,5 @@ import (
 )
 
 func TestScraper(t *testing.T) {
-	scraper.Scrape()
+	scraper.NewScraper("クックパッド", "https://techlife.cookpad.com/", "time", time.Now().Format("2006-01-02"), ".entry-title > a", true).Scrape()
 }
