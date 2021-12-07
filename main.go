@@ -77,6 +77,7 @@ func notifySlack(articles []scraper.Article) error {
 func formatString(str string) string {
 	return strings.NewReplacer(
 		" ", "",
+		"　", "",
 		"\r\n", "",
 		"\r", "",
 		"\n", "",
