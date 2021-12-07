@@ -63,7 +63,6 @@ func notifySlack(articles []scraper.Article) error {
 
 	for _, article := range articles {
 		text += "\n" + article.Company + ": <" + article.Url + "|" + formatString(article.Title) + ">"
-		log.Println(text)
 	}
 
 	msg := slack.WebhookMessage{
