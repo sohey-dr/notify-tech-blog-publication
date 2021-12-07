@@ -62,7 +62,8 @@ func notifySlack(articles []scraper.Article) error {
 	text := "*公開された記事がありました！*\n"
 
 	for _, article := range articles {
-		text += "\n" + article.Company + ": <" + article.Url + "|" + strings.ReplaceAll(article.Title, " ", "") + ">"
+		text += "\n" + article.Company + ": <" + article.Url + "|" + formatString(article.Title) + ">"
+		log.Println(text)
 	}
 
 	msg := slack.WebhookMessage{
@@ -72,6 +73,15 @@ func notifySlack(articles []scraper.Article) error {
 	incomingWebHookURL := os.Getenv("NOTIFY_INCOMING_WEBHOOK")
 
 	return slack.PostWebhook(incomingWebHookURL, &msg)
+}
+
+func formatString(str string) string {
+	return strings.NewReplacer(
+		" ", "",
+		"\r\n", "",
+		"\r", "",
+		"\n", "",
+	).Replace(str)
 }
 
 func main() {
