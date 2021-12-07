@@ -63,7 +63,6 @@ func notifySlack(articles []scraper.Article) error {
 
 	for _, article := range articles {
 		text += "\n" + article.Company + ": <" + article.Url + "|" + formatString(article.Title) + ">"
-		log.Println(text)
 	}
 
 	msg := slack.WebhookMessage{
@@ -78,6 +77,7 @@ func notifySlack(articles []scraper.Article) error {
 func formatString(str string) string {
 	return strings.NewReplacer(
 		" ", "",
+		"　", "",
 		"\r\n", "",
 		"\r", "",
 		"\n", "",
